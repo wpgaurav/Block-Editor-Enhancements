@@ -1,13 +1,13 @@
 === Advanced Block Editor ===
-Contributors: developer.developer.developer
-Donate link: https://developer.developer.developer/donate/
+Contributors: gauravtiwari
+Donate link: https://gauravtiwari.org/donate/
 Tags: block editor, gutenberg, editor, css, javascript, customization
 Requires at least: 6.0
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 2.0.0
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Stable tag: 4.0.0
+License: GPLv3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Enhance the WordPress Block Editor with custom CSS/JS injection, editor width control, word count, and more – without affecting your frontend.
 
@@ -86,28 +86,96 @@ Go to **Settings → Block Editor+**, click the "Custom JS" tab, and add your co
 
 == Changelog ==
 
+= 4.0.0 =
+Major Feature Release
+
+**New Features**
+* Patterns Manager
+	* Visual pattern editor in settings page
+	* Shortcode support: [abe_pattern slug="your-pattern"], [abe_pattern id="123"]
+	* Organize patterns by custom categories
+	* Enable or disable patterns without deleting
+	* Automatically registers with block inserter
+* Per-Block CSS/JS (conditional loading)
+	* Load CSS/JS only when specific blocks are present
+	* Visual rule manager in editor sidebar
+	* Editor-only, frontend-only, or both scopes
+* Frontend Cleanup
+	* Remove unwanted block classes (35+)
+	* Disable emoji scripts, wp-embed, global styles, duotone filters
+	* Cleaner frontend markup
+* Editor Enhancements
+	* Reading time estimation
+	* Paragraph count
+	* Typewriter mode
+	* Automatic heading anchors
+	* Keyboard shortcuts
+	* Copy all content tool
+
+**Improvements**
+* Real-time word count (React hooks)
+* Settings page expanded to 7 tabs
+* Modernized React sidebar UI
+* Dark theme syntax-highlighted code editors
+
+**New Files**
+* includes/class-patterns-manager.php
+* includes/class-per-block-code.php
+* includes/class-frontend-cleanup.php
+* assets/editor/js/patterns-manager.js
+* assets/editor/js/per-block-code.js
+
+= 3.0.0 =
+Block Variations & Custom Code Panel
+
+**New Features**
+* Block Variations Manager
+	* Custom variations for core blocks
+	* Preset attributes (colors, typography, spacing)
+	* Custom icons and titles
+	* Inserter/block/transform scope
+	* Inner blocks support
+	* Enable/disable toggle
+* Custom Code Panel
+	* Fullscreen mode
+	* CSS selector helper
+	* Frontend/backend scope
+	* Multiple snippets
+	* Dark theme syntax highlighting
+
+**New Files**
+* includes/class-block-variations.php
+* includes/class-custom-code.php
+* assets/editor/js/block-variations.js
+* assets/editor/js/custom-code-panel.js
+
 = 2.0.0 =
-* Complete rewrite as standalone plugin
-* Removed all external framework dependencies
-* Added custom CSS injection (inline and file)
-* Added custom JavaScript injection (inline and file)
-* Added modern admin settings page with tabs
-* Added CodeMirror code editors with syntax highlighting
-* Added media library integration for file uploads
-* Added sidebar panel in the Block Editor
-* Added focus mode feature
-* Added fullscreen control option
-* Improved editor width control with unit selector
-* Updated minimum requirements (WP 6.0, PHP 7.4)
+Complete Rewrite
+
+**New Features**
+* Custom CSS (inline/external)
+* Custom JS (inline/external)
+* Modern tabbed settings page
+* CodeMirror editors
+* Media library integration
+* Editor sidebar width control
+* Focus mode
+* Fullscreen control
+
+**Improvements**
+* Editor width with unit selector
+* Removed external frameworks
+* Zero Composer dependencies
+* Requires WordPress 6.0+, PHP 7.4+
 
 = 1.0.0 =
-* Initial release
+Initial Release
 
-== Upgrade Notice ==
+* Basic editor width control
+* Word count display
+* Initial plugin structure
 
-= 2.0.0 =
-Major update! Complete rewrite as a standalone plugin with custom CSS/JS injection features. No external dependencies required.
 
 == Credits ==
 
-Developed by [Gaurav Tiwari](https://developer.developer.developer)
+Developed by [Gaurav Tiwari](https://gauravtiwari.org)
