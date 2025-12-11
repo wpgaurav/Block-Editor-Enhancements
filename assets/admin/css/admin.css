@@ -1,0 +1,222 @@
+/**
+ * Advanced Block Editor - Admin Styles
+ * Clean, modern settings page design
+ */
+
+/* Settings page wrapper */
+.abe-settings-wrap {
+    max-width: 900px;
+    margin: 20px 20px 20px 0;
+}
+
+/* Navigation tabs */
+.abe-nav-tabs {
+    margin-bottom: 0;
+    border-bottom: 1px solid #c3c4c7;
+}
+
+.abe-nav-tabs .nav-tab {
+    background: #f0f0f1;
+    border-color: #c3c4c7;
+    color: #50575e;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.abe-nav-tabs .nav-tab:hover {
+    background: #fff;
+    color: #2271b1;
+}
+
+.abe-nav-tabs .nav-tab-active {
+    background: #fff;
+    border-bottom-color: #fff;
+    color: #1d2327;
+}
+
+/* Settings form */
+.abe-settings-form {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-top: none;
+    padding: 20px 30px;
+}
+
+/* Settings sections */
+.abe-settings-section {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.abe-settings-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.abe-settings-section h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1d2327;
+    margin: 0 0 8px 0;
+    padding: 0;
+}
+
+.abe-settings-section h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d2327;
+    margin: 0 0 12px 0;
+}
+
+.abe-settings-section > .description {
+    color: #646970;
+    margin-bottom: 20px;
+}
+
+/* Form table adjustments */
+.abe-settings-form .form-table {
+    margin-top: 15px;
+}
+
+.abe-settings-form .form-table th {
+    padding: 15px 10px 15px 0;
+    width: 200px;
+    font-weight: 500;
+}
+
+.abe-settings-form .form-table td {
+    padding: 15px 10px;
+}
+
+.abe-settings-form .form-table td .description {
+    margin-top: 8px;
+    color: #646970;
+}
+
+/* Input styling */
+.abe-settings-form input[type="number"],
+.abe-settings-form input[type="url"],
+.abe-settings-form input[type="text"] {
+    border-radius: 4px;
+}
+
+.abe-settings-form select {
+    border-radius: 4px;
+    min-width: 100px;
+}
+
+/* Textarea / Code editors */
+.abe-settings-form textarea.code {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    background: #f6f7f7;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 12px;
+    resize: vertical;
+    min-height: 300px;
+}
+
+.abe-settings-form textarea.code:focus {
+    background: #fff;
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: none;
+}
+
+/* CodeMirror customizations */
+.CodeMirror {
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    font-size: 13px;
+    height: 300px;
+}
+
+.CodeMirror-focused {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+}
+
+/* Upload button spacing */
+.abe-media-upload {
+    margin-left: 10px !important;
+    vertical-align: middle;
+}
+
+/* Code examples / reference sections */
+.abe-code-examples {
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 15px 20px;
+    font-size: 13px;
+    line-height: 2;
+}
+
+.abe-code-examples code {
+    background: #fff;
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid #dcdcde;
+    font-size: 12px;
+    color: #2271b1;
+}
+
+/* Inline notice adjustments */
+.abe-settings-section .notice.inline {
+    margin: 15px 0;
+    padding: 12px 15px;
+}
+
+/* Submit button styling */
+.abe-settings-form .submit {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f1;
+}
+
+/* Checkbox label styling */
+.abe-settings-form label {
+    cursor: pointer;
+}
+
+.abe-settings-form input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Width input group */
+.abe-settings-form .small-text + select {
+    margin-left: 5px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 782px) {
+    .abe-settings-wrap {
+        margin-right: 10px;
+    }
+    
+    .abe-settings-form {
+        padding: 15px;
+    }
+    
+    .abe-settings-form .form-table th {
+        width: 100%;
+        padding-bottom: 5px;
+    }
+    
+    .abe-nav-tabs .nav-tab {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    .abe-media-upload {
+        display: block;
+        margin-left: 0 !important;
+        margin-top: 10px;
+    }
+}

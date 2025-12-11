@@ -1,0 +1,174 @@
+/**
+ * Advanced Block Editor - Editor Styles
+ * Styles that only apply to the Block Editor
+ */
+
+/* Word Count Display */
+.abe-word-count {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #f0f0f1 0%, #e8e8e9 100%);
+    border-bottom: 1px solid #dcdcde;
+    font-size: 13px;
+    color: #1e1e1e;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    z-index: 100;
+    position: sticky;
+    top: 0;
+}
+
+.abe-word-count--bottom {
+    position: sticky;
+    bottom: 0;
+    top: auto;
+    border-bottom: none;
+    border-top: 1px solid #dcdcde;
+}
+
+.abe-word-count__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.abe-word-count__value {
+    font-weight: 600;
+    color: #2271b1;
+    background: #fff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.abe-word-count__label {
+    color: #50575e;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.abe-word-count__separator {
+    width: 1px;
+    height: 20px;
+    background: #c3c4c7;
+}
+
+/* Editor Width Slider in Sidebar */
+.abe-editor-width-control {
+    padding: 16px;
+}
+
+.abe-editor-width-control .components-range-control__wrapper {
+    margin-top: 8px;
+}
+
+.abe-editor-width-control__value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.abe-editor-width-control__input {
+    width: 80px;
+}
+
+/* Dynamic Editor Width Styles (applied via JS) */
+.abe-custom-width .editor-styles-wrapper {
+    max-width: var(--abe-editor-width, 100%) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.abe-custom-width .wp-block {
+    max-width: 100% !important;
+}
+
+.abe-custom-width .block-editor-block-list__layout.is-root-container {
+    max-width: var(--abe-editor-width, 100%) !important;
+    margin: 0 auto;
+}
+
+/* Focus Mode Enhancements */
+.abe-focus-mode .wp-block:not(.is-selected):not(.has-child-selected) {
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.abe-focus-mode .wp-block:not(.is-selected):not(.has-child-selected):hover {
+    opacity: 0.75;
+}
+
+.abe-focus-mode .wp-block.is-selected,
+.abe-focus-mode .wp-block.has-child-selected {
+    opacity: 1;
+}
+
+/* Smooth transitions for editor elements */
+.editor-styles-wrapper .wp-block {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Plugin panel styling */
+.abe-panel-icon {
+    fill: currentColor;
+}
+
+.abe-settings-panel {
+    padding: 16px;
+}
+
+.abe-settings-panel__section {
+    margin-bottom: 20px;
+}
+
+.abe-settings-panel__section:last-child {
+    margin-bottom: 0;
+}
+
+.abe-settings-panel__title {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #757575;
+    margin: 0 0 12px 0;
+}
+
+/* Custom scrollbar for editor */
+.interface-interface-skeleton__content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.interface-interface-skeleton__content::-webkit-scrollbar-track {
+    background: #f0f0f1;
+}
+
+.interface-interface-skeleton__content::-webkit-scrollbar-thumb {
+    background: #c3c4c7;
+    border-radius: 4px;
+}
+
+.interface-interface-skeleton__content::-webkit-scrollbar-thumb:hover {
+    background: #a7aaad;
+}
+
+/* Improve block selection visibility */
+.wp-block.is-selected::after {
+    box-shadow: 0 0 0 1px #007cba !important;
+}
+
+/* Better spacing for nested blocks */
+.wp-block .wp-block {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* Smooth document outline panel */
+.block-editor-list-view-leaf {
+    transition: background-color 0.15s ease;
+}
