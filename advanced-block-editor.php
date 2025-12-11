@@ -3,7 +3,7 @@
  * Plugin Name: Advanced Block Editor
  * Plugin URI: https://developer.developer.developer
  * Description: Enhances the WordPress Block Editor with custom CSS/JS injection, editor width control, word count, and more - without affecting the frontend.
- * Version: 2.0.0
+ * Version: 3.0.0
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: Developer Developer Developer
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin constants
-define( 'ABE_VERSION', '2.0.0' );
+define( 'ABE_VERSION', '3.0.0' );
 define( 'ABE_PLUGIN_FILE', __FILE__ );
 define( 'ABE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'ABE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -588,9 +588,22 @@ final class Advanced_Block_Editor {
     }
 }
 
+// Include additional classes
+require_once ABE_PLUGIN_DIR . 'includes/class-block-variations.php';
+require_once ABE_PLUGIN_DIR . 'includes/class-custom-code.php';
+
 // Initialize plugin
 function abe_init() {
-    return Advanced_Block_Editor::get_instance();
+    // Initialize main plugin
+    $plugin = Advanced_Block_Editor::get_instance();
+    
+    // Initialize block variations
+    ABE_Block_Variations::get_instance();
+    
+    // Initialize custom code manager
+    ABE_Custom_Code::get_instance();
+    
+    return $plugin;
 }
 add_action( 'plugins_loaded', 'abe_init' );
 

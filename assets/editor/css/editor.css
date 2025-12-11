@@ -172,3 +172,262 @@
 .block-editor-list-view-leaf {
     transition: background-color 0.15s ease;
 }
+
+/* ========================================
+   Block Variations Panel Styles
+   ======================================== */
+
+.abe-variation-modal {
+    max-width: 600px;
+}
+
+.abe-variation-modal .components-modal__content {
+    padding: 20px;
+}
+
+.abe-variation-editor .components-textarea-control__input.code,
+.abe-variation-editor textarea.code {
+    font-family: 'SF Mono', Monaco, Consolas, monospace;
+    font-size: 12px;
+    background: #f6f7f7;
+}
+
+.abe-variations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.abe-variation-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.abe-variation-card:hover {
+    border-color: #007cba;
+    background: #f9f9f9;
+}
+
+.abe-status-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.abe-status-badge.active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.abe-status-badge.inactive {
+    background: #f0f0f1;
+    color: #757575;
+}
+
+.abe-no-variations {
+    text-align: center;
+    padding: 20px;
+    color: #757575;
+}
+
+.abe-no-variations p:first-child {
+    font-weight: 500;
+    color: #1e1e1e;
+}
+
+/* ========================================
+   Custom Code Panel Styles
+   ======================================== */
+
+.abe-snippet-card {
+    margin-bottom: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.abe-snippet-card:hover {
+    border-color: #007cba;
+}
+
+.abe-snippet-type {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+}
+
+.abe-snippet-type--css {
+    background: #264de4;
+    color: white;
+}
+
+.abe-snippet-type--js {
+    background: #f7df1e;
+    color: #000;
+}
+
+.abe-snippet-scope {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.abe-scope-badge {
+    font-size: 10px;
+    color: #757575;
+}
+
+/* Code Editor */
+.abe-code-editor {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.abe-code-editor__header {
+    background: #1e1e1e;
+    padding: 8px 12px;
+    border-bottom: 1px solid #333;
+}
+
+.abe-code-editor__language {
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 1px;
+}
+
+.abe-code-editor__textarea {
+    flex: 1;
+    width: 100%;
+    min-height: 400px;
+    padding: 16px;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    border: none;
+    resize: none;
+    font-family: 'SF Mono', Monaco, Consolas, 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    tab-size: 4;
+}
+
+.abe-code-editor__textarea:focus {
+    outline: none;
+}
+
+.abe-code-editor__textarea::placeholder {
+    color: #666;
+}
+
+/* Fullscreen Editor Modal */
+.abe-fullscreen-editor-modal {
+    max-width: 100% !important;
+    height: 100% !important;
+}
+
+.abe-fullscreen-editor-modal .components-modal__content {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px);
+}
+
+.abe-fullscreen-editor {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.abe-fullscreen-editor__sidebar {
+    width: 300px;
+    background: #f9f9f9;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.abe-fullscreen-editor__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.abe-fullscreen-editor__main .abe-code-editor {
+    flex: 1;
+    border: none;
+    border-radius: 0;
+}
+
+.abe-fullscreen-editor__main .abe-code-editor__textarea {
+    min-height: 100%;
+}
+
+.abe-fullscreen-editor__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 12px 20px;
+    background: #f9f9f9;
+    border-top: 1px solid #ddd;
+}
+
+/* Selector Reference */
+.abe-selector-reference {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #ddd;
+}
+
+.abe-selector-reference h4 {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    color: #1e1e1e;
+}
+
+.abe-selector-category {
+    margin-bottom: 12px;
+}
+
+.abe-selector-category h5 {
+    font-size: 11px;
+    font-weight: 500;
+    color: #757575;
+    margin: 0 0 6px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.abe-selector-item {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 6px;
+    margin: 2px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.abe-selector-item:hover {
+    background: #007cba;
+    color: white;
+    border-color: #007cba;
+}
+
+.abe-scope-section {
+    margin-bottom: 16px;
+}
+
+.abe-scope-section > label {
+    display: block;
+    margin-bottom: 8px;
+}
