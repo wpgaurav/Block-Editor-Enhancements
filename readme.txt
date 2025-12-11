@@ -1,5 +1,6 @@
 === Advanced Block Editor ===
-Contributors: developer
+Contributors: developer.developer.developer
+Donate link: https://developer.developer.developer/donate/
 Tags: block editor, gutenberg, editor, css, javascript, customization
 Requires at least: 6.0
 Tested up to: 6.4
@@ -106,3 +107,7 @@ Go to **Settings → Block Editor+**, click the "Custom JS" tab, and add your co
 
 = 2.0.0 =
 Major update! Complete rewrite as a standalone plugin with custom CSS/JS injection features. No external dependencies required.
+
+== Credits ==
+
+Developed by [Gaurav Tiwari](https://developer.developer.developer)

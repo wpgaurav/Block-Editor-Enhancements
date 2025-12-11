@@ -169,7 +169,13 @@ wp.hooks.addFilter('blocks.registerBlockType', 'myPlugin/filter', filterFn);
 
 GPL v3 or later. See [LICENSE](LICENSE) for full text.
 
-## Credits
+## Author
 
-Rebuilt with focus on simplicity and modern WordPress standards.
+**Gaurav Tiwari**
+- Website: [developer.developer.developer](https://developer.developer.developer)
+- GitHub: [@developer.developer.developer](https://github.com/developer.developer.developer)
+
+## Support
+
+For bug reports and feature requests, please use the [GitHub Issues](https://github.com/developer.developer.developer/advanced-block-editor/issues) page.
 
