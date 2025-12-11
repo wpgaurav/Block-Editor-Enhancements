@@ -1,17 +1,21 @@
 <?php
 /**
  * Plugin Name: Advanced Block Editor
- * Plugin URI: https://developer.developer.developer
+ * Plugin URI: https://developer.developer.developer/wordpress-plugins/advanced-block-editor/
  * Description: Powerful WordPress Block Editor enhancements - custom patterns, per-block CSS/JS, frontend cleanup, word count, editor width control, focus mode, and much more.
  * Version: 4.0.0
  * Requires at least: 6.0
  * Requires PHP: 7.4
- * Author: Developer Developer Developer
+ * Author: Gaurav Tiwari
  * Author URI: https://developer.developer.developer
  * License: GPL v3 or later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: advanced-block-editor
  * Domain Path: /languages
+ *
+ * @package Advanced_Block_Editor
+ * @author Gaurav Tiwari
+ * @link https://developer.developer.developer
  */
 
 // Prevent direct access
