@@ -6,55 +6,17 @@
 (function () {
     'use strict';
 
-    const { createElement: el, useState, useEffect, useCallback, Fragment } = wp.element;
+    const { createElement: el, useState, useEffect, useCallback, useRef, Fragment } = wp.element;
     const { registerPlugin } = wp.plugins;
-    const { PluginSidebar, PluginSidebarMoreMenuItem } = wp.editPost;
-    const { PanelBody, RangeControl, SelectControl, ToggleControl, Button } = wp.components;
+    const { PluginSidebar, PluginSidebarMoreMenuItem, PluginMoreMenuItem } = wp.editPost;
+    const { PanelBody, RangeControl, SelectControl, ToggleControl, Button, Tooltip, Icon } = wp.components;
     const { useSelect, useDispatch, subscribe } = wp.data;
     const { __ } = wp.i18n;
     const { count: wordCount } = wp.wordcount;
+    const { serialize } = wp.blocks;
 
     // Get settings from localized data
     const settings = window.abeSettings || {};
-
-    /**
-     * Word Count Component
-     */
-    function WordCountDisplay() {
-        const [counts, setCounts] = useState({ words: 0, characters: 0 });
-
-        const content = useSelect((select) => {
-            const blocks = select('core/block-editor').getBlocks();
-            return getBlocksText(blocks);
-        }, []);
-
-        useEffect(() => {
-            if (content) {
-                const words = wordCount(content, 'words');
-                const characters = content.replace(/\s/g, '').length;
-                setCounts({ words, characters });
-            }
-        }, [content]);
-
-        if (!settings.wordCountEnabled) {
-            return null;
-        }
-
-        const position = settings.wordCountPosition || 'top';
-        const className = `abe-word-count abe-word-count--${position}`;
-
-        return el('div', { className },
-            el('div', { className: 'abe-word-count__item' },
-                el('span', { className: 'abe-word-count__value' }, counts.words),
-                el('span', { className: 'abe-word-count__label' }, settings.i18n?.words || 'words')
-            ),
-            el('div', { className: 'abe-word-count__separator' }),
-            el('div', { className: 'abe-word-count__item' },
-                el('span', { className: 'abe-word-count__value' }, counts.characters),
-                el('span', { className: 'abe-word-count__label' }, settings.i18n?.characters || 'characters')
-            )
-        );
-    }
 
     /**
      * Extract text content from blocks recursively
@@ -84,6 +46,112 @@
     }
 
     /**
+     * Count paragraphs in blocks
+     */
+    function countParagraphs(blocks) {
+        let count = 0;
+
+        blocks.forEach(block => {
+            if (block.name === 'core/paragraph' && block.attributes.content) {
+                count++;
+            }
+            if (block.innerBlocks && block.innerBlocks.length) {
+                count += countParagraphs(block.innerBlocks);
+            }
+        });
+
+        return count;
+    }
+
+    /**
+     * Word Count Component with enhanced stats
+     */
+    function WordCountDisplay() {
+        const [counts, setCounts] = useState({ words: 0, characters: 0, paragraphs: 0, readingTime: 1 });
+        const containerRef = useRef(null);
+
+        const blocks = useSelect((select) => {
+            return select('core/block-editor').getBlocks();
+        }, []);
+
+        useEffect(() => {
+            if (blocks && blocks.length > 0) {
+                const content = getBlocksText(blocks);
+                const words = wordCount(content, 'words');
+                const characters = content.replace(/\s/g, '').length;
+                const paragraphs = countParagraphs(blocks);
+                const readingTime = Math.max(1, Math.ceil(words / 200));
+                setCounts({ words, characters, paragraphs, readingTime });
+            } else {
+                setCounts({ words: 0, characters: 0, paragraphs: 0, readingTime: 1 });
+            }
+        }, [blocks]);
+
+        if (!settings.wordCountEnabled) {
+            return null;
+        }
+
+        const position = settings.wordCountPosition || 'top';
+
+        // Status bar style (floating)
+        if (position === 'statusbar') {
+            return el('div', {
+                className: 'abe-word-count abe-word-count--statusbar',
+                ref: containerRef
+            },
+                el('div', { className: 'abe-word-count__item' },
+                    el('span', { className: 'abe-word-count__value' }, counts.words),
+                    el('span', { className: 'abe-word-count__label' }, settings.i18n?.words || 'words')
+                ),
+                el('div', { className: 'abe-word-count__separator' }),
+                el('div', { className: 'abe-word-count__item' },
+                    el('span', { className: 'abe-word-count__value' }, counts.characters),
+                    el('span', { className: 'abe-word-count__label' }, settings.i18n?.characters || 'characters')
+                ),
+                settings.paragraphCount && el(Fragment, null,
+                    el('div', { className: 'abe-word-count__separator' }),
+                    el('div', { className: 'abe-word-count__item' },
+                        el('span', { className: 'abe-word-count__value' }, counts.paragraphs),
+                        el('span', { className: 'abe-word-count__label' }, settings.i18n?.paragraphs || 'paragraphs')
+                    )
+                ),
+                el('div', { className: 'abe-word-count__separator' }),
+                el('div', { className: 'abe-word-count__item abe-word-count__reading-time' },
+                    el('span', { className: 'abe-word-count__value' }, counts.readingTime),
+                    el('span', { className: 'abe-word-count__label' }, settings.i18n?.readingTime || 'min read')
+                )
+            );
+        }
+
+        // Top/Bottom style
+        const className = `abe-word-count abe-word-count--${position}`;
+
+        return el('div', { className, ref: containerRef },
+            el('div', { className: 'abe-word-count__item' },
+                el('span', { className: 'abe-word-count__value' }, counts.words),
+                el('span', { className: 'abe-word-count__label' }, settings.i18n?.words || 'words')
+            ),
+            el('div', { className: 'abe-word-count__separator' }),
+            el('div', { className: 'abe-word-count__item' },
+                el('span', { className: 'abe-word-count__value' }, counts.characters),
+                el('span', { className: 'abe-word-count__label' }, settings.i18n?.characters || 'characters')
+            ),
+            settings.paragraphCount && el(Fragment, null,
+                el('div', { className: 'abe-word-count__separator' }),
+                el('div', { className: 'abe-word-count__item' },
+                    el('span', { className: 'abe-word-count__value' }, counts.paragraphs),
+                    el('span', { className: 'abe-word-count__label' }, settings.i18n?.paragraphs || 'paragraphs')
+                )
+            ),
+            el('div', { className: 'abe-word-count__separator' }),
+            el('div', { className: 'abe-word-count__item abe-word-count__reading-time' },
+                el('span', { className: 'abe-word-count__value' }, counts.readingTime),
+                el('span', { className: 'abe-word-count__label' }, settings.i18n?.readingTime || 'min read')
+            )
+        );
+    }
+
+    /**
      * Editor Width Controller
      */
     function EditorWidthControl() {
@@ -91,9 +159,6 @@
         const [unit, setUnit] = useState(settings.editorWidthUnit || 'px');
 
         const applyWidth = useCallback((newWidth, newUnit) => {
-            const editor = document.querySelector('.edit-post-visual-editor');
-            const wrapper = document.querySelector('.editor-styles-wrapper');
-
             if (newWidth > 0) {
                 document.body.classList.add('abe-custom-width');
                 document.documentElement.style.setProperty('--abe-editor-width', `${newWidth}${newUnit}`);
@@ -152,10 +217,44 @@
     }
 
     /**
+     * Copy All Content Button
+     */
+    function CopyAllContentButton() {
+        const [copied, setCopied] = useState(false);
+
+        const blocks = useSelect((select) => {
+            return select('core/block-editor').getBlocks();
+        }, []);
+
+        const handleCopy = useCallback(() => {
+            if (!blocks || blocks.length === 0) return;
+
+            const content = serialize(blocks);
+
+            navigator.clipboard.writeText(content).then(() => {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }, [blocks]);
+
+        if (!settings.enableCopyAll) {
+            return null;
+        }
+
+        return el(PluginMoreMenuItem, {
+            icon: copied ? 'yes' : 'clipboard',
+            onClick: handleCopy
+        }, copied ? (settings.i18n?.copied || __('Copied!', 'advanced-block-editor')) : (settings.i18n?.copyAll || __('Copy All Content', 'advanced-block-editor')));
+    }
+
+    /**
      * Main Settings Panel Plugin
      */
     function AdvancedBlockEditorPlugin() {
         const [focusMode, setFocusMode] = useState(settings.focusMode || false);
+        const [typewriterMode, setTypewriterMode] = useState(settings.typewriterMode || false);
 
         // Apply focus mode
         useEffect(() => {
@@ -165,6 +264,15 @@
                 document.body.classList.remove('abe-focus-mode');
             }
         }, [focusMode]);
+
+        // Apply typewriter mode
+        useEffect(() => {
+            if (typewriterMode) {
+                document.body.classList.add('abe-typewriter-mode');
+            } else {
+                document.body.classList.remove('abe-typewriter-mode');
+            }
+        }, [typewriterMode]);
 
         // Plugin icon
         const icon = el('svg', {
@@ -182,11 +290,11 @@
             el(PluginSidebarMoreMenuItem, {
                 target: 'abe-settings-panel',
                 icon: icon
-            }, __('Advanced Editor', 'advanced-block-editor')),
+            }, __('Block Editor+', 'advanced-block-editor')),
             el(PluginSidebar, {
                 name: 'abe-settings-panel',
                 icon: icon,
-                title: __('Advanced Editor', 'advanced-block-editor')
+                title: __('Block Editor+', 'advanced-block-editor')
             },
                 el(PanelBody, {
                     title: __('Editor Width', 'advanced-block-editor'),
@@ -195,7 +303,7 @@
                     el(EditorWidthControl)
                 ),
                 el(PanelBody, {
-                    title: __('Display Options', 'advanced-block-editor'),
+                    title: __('Writing Mode', 'advanced-block-editor'),
                     initialOpen: false
                 },
                     el(ToggleControl, {
@@ -203,9 +311,49 @@
                         help: __('Dim non-selected blocks to focus on current block.', 'advanced-block-editor'),
                         checked: focusMode,
                         onChange: setFocusMode
+                    }),
+                    el(ToggleControl, {
+                        label: __('Typewriter Mode', 'advanced-block-editor'),
+                        help: __('Keep the cursor centered while typing.', 'advanced-block-editor'),
+                        checked: typewriterMode,
+                        onChange: setTypewriterMode
                     })
+                ),
+                el(PanelBody, {
+                    title: __('Quick Actions', 'advanced-block-editor'),
+                    initialOpen: false
+                },
+                    el(Button, {
+                        variant: 'secondary',
+                        onClick: () => {
+                            const blocks = wp.data.select('core/block-editor').getBlocks();
+                            if (blocks.length) {
+                                const content = serialize(blocks);
+                                navigator.clipboard.writeText(content);
+                            }
+                        },
+                        style: { marginBottom: '8px', width: '100%' }
+                    }, __('Copy All Blocks', 'advanced-block-editor')),
+                    el(Button, {
+                        variant: 'secondary',
+                        onClick: () => {
+                            wp.data.dispatch('core/editor').undo();
+                        },
+                        style: { marginBottom: '8px', width: '100%' }
+                    }, __('Undo Last Change', 'advanced-block-editor')),
+                    el(Button, {
+                        variant: 'secondary',
+                        onClick: () => {
+                            const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock();
+                            if (selectedBlock) {
+                                wp.data.dispatch('core/block-editor').duplicateBlocks([selectedBlock.clientId]);
+                            }
+                        },
+                        style: { width: '100%' }
+                    }, __('Duplicate Selected Block', 'advanced-block-editor'))
                 )
-            )
+            ),
+            el(CopyAllContentButton)
         );
     }
 
@@ -219,10 +367,16 @@
 
         // Wait for editor to be ready
         const unsubscribe = subscribe(() => {
-            const editorWrapper = document.querySelector('.edit-post-visual-editor');
+            const editorWrapper = document.querySelector('.editor-styles-wrapper');
+            const visualEditor = document.querySelector('.edit-post-visual-editor');
 
-            if (editorWrapper) {
+            if (editorWrapper && visualEditor) {
                 unsubscribe();
+
+                // Check if already initialized
+                if (document.getElementById('abe-word-count-root')) {
+                    return;
+                }
 
                 // Create word count container
                 const wordCountContainer = document.createElement('div');
@@ -230,9 +384,14 @@
 
                 const position = settings.wordCountPosition || 'top';
 
-                if (position === 'top') {
+                if (position === 'statusbar') {
+                    // Floating status bar
+                    visualEditor.appendChild(wordCountContainer);
+                } else if (position === 'top') {
+                    // Insert at top of editor wrapper
                     editorWrapper.insertBefore(wordCountContainer, editorWrapper.firstChild);
                 } else {
+                    // Insert at bottom
                     editorWrapper.appendChild(wordCountContainer);
                 }
 
@@ -257,24 +416,15 @@
             return;
         }
 
-        const unsubscribe = subscribe(() => {
-            const isFullscreen = useSelect ?
-                wp.data.select('core/edit-post')?.isFeatureActive('fullscreenMode') :
-                false;
-
-            if (isFullscreen) {
-                wp.data.dispatch('core/edit-post').toggleFeature('fullscreenMode');
-                unsubscribe();
-            }
+        // Wait for editor to be fully loaded
+        wp.domReady(() => {
+            setTimeout(() => {
+                const isFullscreen = wp.data.select('core/edit-post')?.isFeatureActive('fullscreenMode');
+                if (isFullscreen) {
+                    wp.data.dispatch('core/edit-post').toggleFeature('fullscreenMode');
+                }
+            }, 100);
         });
-
-        // Also check immediately
-        setTimeout(() => {
-            const isFullscreen = wp.data.select('core/edit-post')?.isFeatureActive('fullscreenMode');
-            if (isFullscreen) {
-                wp.data.dispatch('core/edit-post').toggleFeature('fullscreenMode');
-            }
-        }, 100);
     }
 
     /**
@@ -312,6 +462,125 @@
     }
 
     /**
+     * Apply typewriter mode (keep cursor centered)
+     */
+    function initTypewriterMode() {
+        if (!settings.typewriterMode) {
+            return;
+        }
+
+        document.body.classList.add('abe-typewriter-mode');
+
+        // Subscribe to selection changes
+        let lastClientId = null;
+
+        subscribe(() => {
+            if (!document.body.classList.contains('abe-typewriter-mode')) {
+                return;
+            }
+
+            const selectedClientId = wp.data.select('core/block-editor').getSelectedBlockClientId();
+
+            if (selectedClientId && selectedClientId !== lastClientId) {
+                lastClientId = selectedClientId;
+
+                // Find the selected block element and scroll it into view
+                setTimeout(() => {
+                    const blockElement = document.querySelector(`[data-block="${selectedClientId}"]`);
+                    if (blockElement) {
+                        const editorContainer = document.querySelector('.interface-interface-skeleton__content');
+                        if (editorContainer) {
+                            const containerRect = editorContainer.getBoundingClientRect();
+                            const blockRect = blockElement.getBoundingClientRect();
+                            const centerOffset = (containerRect.height / 2) - (blockRect.height / 2);
+
+                            editorContainer.scrollTo({
+                                top: editorContainer.scrollTop + blockRect.top - containerRect.top - centerOffset,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                }, 50);
+            }
+        });
+    }
+
+    /**
+     * Apply smooth scrolling
+     */
+    function initSmoothScrolling() {
+        if (!settings.smoothScrolling) {
+            return;
+        }
+
+        const unsubscribe = subscribe(() => {
+            const editorContent = document.querySelector('.interface-interface-skeleton__content');
+            if (editorContent) {
+                unsubscribe();
+                editorContent.style.scrollBehavior = 'smooth';
+            }
+        });
+    }
+
+    /**
+     * Enhanced block highlighting
+     */
+    function initBlockHighlighting() {
+        if (!settings.highlightCurrentBlock) {
+            return;
+        }
+
+        document.body.classList.add('abe-highlight-blocks');
+    }
+
+    /**
+     * Keyboard shortcuts
+     */
+    function initKeyboardShortcuts() {
+        if (!settings.enableKeyboardShortcuts) {
+            return;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Shift+D: Duplicate block
+            if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+                e.preventDefault();
+                const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock();
+                if (selectedBlock) {
+                    wp.data.dispatch('core/block-editor').duplicateBlocks([selectedBlock.clientId]);
+                }
+            }
+
+            // Ctrl+Shift+Backspace: Remove block
+            if (e.ctrlKey && e.shiftKey && e.key === 'Backspace') {
+                e.preventDefault();
+                const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock();
+                if (selectedBlock) {
+                    wp.data.dispatch('core/block-editor').removeBlocks([selectedBlock.clientId]);
+                }
+            }
+
+            // Ctrl+Shift+Up: Move block up
+            if (e.ctrlKey && e.shiftKey && e.key === 'ArrowUp') {
+                e.preventDefault();
+                const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock();
+                if (selectedBlock) {
+                    wp.data.dispatch('core/block-editor').moveBlocksUp([selectedBlock.clientId]);
+                }
+            }
+
+            // Ctrl+Shift+Down: Move block down
+            if (e.ctrlKey && e.shiftKey && e.key === 'ArrowDown') {
+                e.preventDefault();
+                const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock();
+                if (selectedBlock) {
+                    wp.data.dispatch('core/block-editor').moveBlocksDown([selectedBlock.clientId]);
+                }
+            }
+        });
+    }
+
+    /**
      * Initialize everything when DOM is ready
      */
     function init() {
@@ -326,15 +595,17 @@
         maybeDisableFullscreen();
         applyInitialEditorWidth();
         applyInitialFocusMode();
+        initTypewriterMode();
+        initSmoothScrolling();
+        initBlockHighlighting();
+        initKeyboardShortcuts();
 
-        console.log('Advanced Block Editor initialized');
+        console.log('Advanced Block Editor v4.0 initialized');
     }
 
     // Wait for WordPress to be ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
+    wp.domReady(() => {
         init();
-    }
+    });
 
 })();

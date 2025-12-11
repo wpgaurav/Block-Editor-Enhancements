@@ -3,13 +3,16 @@
  * Styles that only apply to the Block Editor
  */
 
-/* Word Count Display */
+/* ========================================
+   Word Count Display
+   ======================================== */
+
 .abe-word-count {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 8px 16px;
-    background: linear-gradient(135deg, #f0f0f1 0%, #e8e8e9 100%);
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     border-bottom: 1px solid #dcdcde;
     font-size: 13px;
     color: #1e1e1e;
@@ -17,6 +20,7 @@
     z-index: 100;
     position: sticky;
     top: 0;
+    flex-wrap: wrap;
 }
 
 .abe-word-count--bottom {
@@ -25,6 +29,20 @@
     top: auto;
     border-bottom: none;
     border-top: 1px solid #dcdcde;
+}
+
+.abe-word-count--statusbar {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid #dcdcde;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    padding: 8px 16px;
+    gap: 12px;
 }
 
 .abe-word-count__item {
@@ -37,18 +55,20 @@
     font-weight: 600;
     color: #2271b1;
     background: #fff;
-    padding: 2px 8px;
+    padding: 2px 10px;
     border-radius: 12px;
-    font-size: 12px;
-    min-width: 40px;
+    font-size: 13px;
+    min-width: 32px;
     text-align: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .abe-word-count__label {
     color: #50575e;
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    font-weight: 500;
 }
 
 .abe-word-count__separator {
@@ -57,7 +77,15 @@
     background: #c3c4c7;
 }
 
-/* Editor Width Slider in Sidebar */
+.abe-word-count__reading-time .abe-word-count__value {
+    background: #d4edda;
+    color: #0a4b23;
+}
+
+/* ========================================
+   Editor Width Control
+   ======================================== */
+
 .abe-editor-width-control {
     padding: 16px;
 }
@@ -77,7 +105,7 @@
     width: 80px;
 }
 
-/* Dynamic Editor Width Styles (applied via JS) */
+/* Dynamic Editor Width Styles */
 .abe-custom-width .editor-styles-wrapper {
     max-width: var(--abe-editor-width, 100%) !important;
     margin-left: auto !important;
@@ -93,14 +121,17 @@
     margin: 0 auto;
 }
 
-/* Focus Mode Enhancements */
+/* ========================================
+   Focus Mode
+   ======================================== */
+
 .abe-focus-mode .wp-block:not(.is-selected):not(.has-child-selected) {
-    opacity: 0.5;
+    opacity: 0.4;
     transition: opacity 0.2s ease;
 }
 
 .abe-focus-mode .wp-block:not(.is-selected):not(.has-child-selected):hover {
-    opacity: 0.75;
+    opacity: 0.7;
 }
 
 .abe-focus-mode .wp-block.is-selected,
@@ -108,12 +139,39 @@
     opacity: 1;
 }
 
-/* Smooth transitions for editor elements */
-.editor-styles-wrapper .wp-block {
-    transition: opacity 0.2s ease, transform 0.2s ease;
+/* ========================================
+   Typewriter Mode
+   ======================================== */
+
+.abe-typewriter-mode .interface-interface-skeleton__content {
+    scroll-behavior: smooth;
 }
 
-/* Plugin panel styling */
+/* ========================================
+   Block Highlighting
+   ======================================== */
+
+.abe-highlight-blocks .wp-block.is-selected {
+    box-shadow: 0 0 0 2px #007cba, 0 0 0 4px rgba(0, 124, 186, 0.1) !important;
+    border-radius: 2px;
+}
+
+.abe-highlight-blocks .wp-block.is-selected > .block-editor-block-list__layout {
+    padding: 4px;
+}
+
+/* ========================================
+   Smooth Transitions
+   ======================================== */
+
+.editor-styles-wrapper .wp-block {
+    transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ========================================
+   Plugin Panel Styling
+   ======================================== */
+
 .abe-panel-icon {
     fill: currentColor;
 }
@@ -139,7 +197,10 @@
     margin: 0 0 12px 0;
 }
 
-/* Custom scrollbar for editor */
+/* ========================================
+   Custom Scrollbar
+   ======================================== */
+
 .interface-interface-skeleton__content::-webkit-scrollbar {
     width: 8px;
 }
@@ -157,18 +218,27 @@
     background: #a7aaad;
 }
 
-/* Improve block selection visibility */
+/* ========================================
+   Block Selection Enhancement
+   ======================================== */
+
 .wp-block.is-selected::after {
     box-shadow: 0 0 0 1px #007cba !important;
 }
 
-/* Better spacing for nested blocks */
+/* ========================================
+   Nested Blocks Spacing
+   ======================================== */
+
 .wp-block .wp-block {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-/* Smooth document outline panel */
+/* ========================================
+   Document Outline Panel
+   ======================================== */
+
 .block-editor-list-view-leaf {
     transition: background-color 0.15s ease;
 }
@@ -226,15 +296,180 @@
     color: #757575;
 }
 
-.abe-no-variations {
+.abe-no-variations,
+.abe-no-patterns {
     text-align: center;
     padding: 20px;
     color: #757575;
 }
 
-.abe-no-variations p:first-child {
+.abe-no-variations p:first-child,
+.abe-no-patterns p:first-child {
     font-weight: 500;
     color: #1e1e1e;
+}
+
+/* ========================================
+   Patterns Manager Styles
+   ======================================== */
+
+.abe-pattern-card {
+    margin-bottom: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.abe-pattern-card:hover {
+    border-color: #007cba;
+}
+
+.abe-pattern-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.abe-pattern-card__description {
+    font-size: 12px;
+    color: #757575;
+    margin: 4px 0 8px;
+}
+
+.abe-pattern-card__meta {
+    margin-bottom: 8px;
+}
+
+.abe-pattern-card__shortcode {
+    font-size: 11px;
+    background: #f6f7f7;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.abe-pattern-card__actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 8px;
+    border-top: 1px solid #f0f0f1;
+}
+
+.abe-pattern-modal {
+    width: 800px;
+    max-width: 90vw;
+}
+
+.abe-pattern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.abe-pattern-form__content label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.abe-pattern-form__categories label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.abe-pattern-form__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* ========================================
+   Per-Block Code Panel Styles
+   ======================================== */
+
+.abe-block-rule-card {
+    margin-bottom: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.abe-block-rule-card:hover {
+    border-color: #007cba;
+}
+
+.abe-block-rule-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.abe-block-rule-card__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.abe-block-rule-card__block-type {
+    font-size: 12px;
+    color: #757575;
+}
+
+.abe-block-rule-card__types {
+    display: flex;
+    gap: 4px;
+}
+
+.abe-block-rule-card__scope {
+    font-size: 11px;
+    color: #757575;
+    margin-bottom: 8px;
+}
+
+.abe-block-rule-card__actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 8px;
+    border-top: 1px solid #f0f0f1;
+}
+
+.abe-block-rule-modal.components-modal__screen-overlay {
+    z-index: 100000;
+}
+
+.abe-block-rule-editor {
+    display: flex;
+    height: calc(100vh - 120px);
+    margin: -20px;
+}
+
+.abe-block-rule-editor__sidebar {
+    width: 300px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-right: 1px solid #e0e0e0;
+    overflow-y: auto;
+}
+
+.abe-block-rule-editor__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.abe-block-rule-editor__actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
 }
 
 /* ========================================
@@ -280,14 +515,18 @@
     color: #757575;
 }
 
-/* Code Editor */
+/* ========================================
+   Code Editor
+   ======================================== */
+
 .abe-code-editor {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    flex: 1;
     border: 1px solid #ddd;
     border-radius: 4px;
     overflow: hidden;
+    min-height: 200px;
 }
 
 .abe-code-editor__header {
@@ -301,12 +540,13 @@
     font-weight: 600;
     color: #888;
     letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .abe-code-editor__textarea {
     flex: 1;
     width: 100%;
-    min-height: 400px;
+    min-height: 200px;
     padding: 16px;
     background: #1e1e1e;
     color: #d4d4d4;
@@ -326,7 +566,10 @@
     color: #666;
 }
 
-/* Fullscreen Editor Modal */
+/* ========================================
+   Fullscreen Editor Modal
+   ======================================== */
+
 .abe-fullscreen-editor-modal {
     max-width: 100% !important;
     height: 100% !important;
@@ -378,7 +621,10 @@
     border-top: 1px solid #ddd;
 }
 
-/* Selector Reference */
+/* ========================================
+   Selector Reference
+   ======================================== */
+
 .abe-selector-reference {
     margin-top: 24px;
     padding-top: 16px;
@@ -430,4 +676,43 @@
 .abe-scope-section > label {
     display: block;
     margin-bottom: 8px;
+    font-weight: 500;
+}
+
+/* ========================================
+   Checkbox Grid
+   ======================================== */
+
+.abe-checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+}
+
+/* ========================================
+   Reading Time (Frontend)
+   ======================================== */
+
+.abe-reading-time {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.abe-reading-time__icon {
+    font-size: 16px;
+}
+
+/* ========================================
+   Patterns List
+   ======================================== */
+
+.abe-patterns-list,
+.abe-rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
