@@ -117,20 +117,9 @@ wp.plugins.registerPlugin('my-plugin', { render: MyComponent });
 wp.hooks.addFilter('blocks.registerBlockType', 'myPlugin/filter', filterFn);
 ```
 
-## Why Standalone?
-
-This plugin was rebuilt from the ground up to be **completely standalone**:
-
-- ❌ No WP Content Framework dependency
-- ❌ No Composer packages required
-- ❌ No complex autoloading
-- ✅ Just pure WordPress PHP
-- ✅ Self-contained JavaScript
-- ✅ Works out of the box
-
 ## License
 
-GPL v2 or later. See [LICENSE](LICENSE) for full text.
+GPL v3 or later. See [LICENSE](LICENSE) for full text.
 
 ## Credits
 
