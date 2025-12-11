@@ -4,7 +4,7 @@ Enhance the WordPress Block Editor with custom CSS/JS injection, editor width co
 
 ![WordPress](https://img.shields.io/badge/WordPress-%3E%3D6.0-blue)
 ![PHP](https://img.shields.io/badge/PHP-%3E%3D7.4-purple)
-![License](https://img.shields.io/badge/License-GPLv2-green)
+![License](https://img.shields.io/badge/License-GPLv3-green)
 
 ## Features
 
