@@ -4,7 +4,7 @@ Enhance the WordPress Block Editor with custom CSS/JS injection, **Core Block Va
 
 ![WordPress](https://img.shields.io/badge/WordPress-%3E%3D6.0-blue)
 ![PHP](https://img.shields.io/badge/PHP-%3E%3D7.4-purple)
-![License](https://img.shields.io/badge/License-GPLv3-green)
+![License](https://img.shields.io/badge/License-GPLv3-green) [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=flat&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/gauravtiwari)
 
 ## Features
 
@@ -179,3 +179,10 @@ GPL v3 or later. See [LICENSE](LICENSE) for full text.
 
 For bug reports and feature requests, please use the [GitHub Issues](https://github.com/wpgaurav/block-editor-enhancements/issues) page.
 
+Advanced Block Editor adds Core Block Variations and a custom code panel to the WordPress block editor, and each CSS or JS snippet can run in the editor, on the frontend or both. It is free and open source under GPL v3 and I keep it updated.
+
+If a saved variation stopped you from setting the same colors and spacing on a core block every time you inserted it, you can buy me a coffee.
+
+<a href="https://buymeacoffee.com/gauravtiwari"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="50"></a>
+
+Starring the repo helps as well, and a bug report is most useful when it names your WordPress and PHP versions and the variation or snippet that misbehaved.
